@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ภารกิจแก้ววิเศษ: การบวกเศษส่วนที่มีตัวส่วนเท่ากัน | ครูธนโชติ สุยะ</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-badge">🧪</div>
+        <div>
+          <h1>ภารกิจแก้ววิเศษ</h1>
+          <small>สื่อ Interactive เรื่อง การบวกเศษส่วนที่มีตัวส่วนเท่ากัน · ชั้นประถมศึกษาปีที่ 3</small>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="soundBtn" type="button">🔊 เสียง: เปิด</button>
+        <button class="icon-btn" id="screenBtn" type="button">🖥️ โหมดหน้าชั้น</button>
+        <button class="icon-btn" id="resetBtnTop" type="button">↻ เริ่มใหม่</button>
+      </div>
+    </header>
+
+    <section class="publication-info" aria-label="ข้อมูลและคำแนะนำการใช้สื่อ">
+      <div class="pub-head">
+        <div>
+          <h2>ชื่อสื่อ: “ภารกิจแก้ววิเศษ” การบวกเศษส่วนที่มีตัวส่วนเท่ากัน</h2>
+          <p class="pub-sub">สื่อการเรียนรู้แบบ Interactive สำหรับใช้กระตุ้นความสนใจ ทดลอง และสรุปแนวคิดทางคณิตศาสตร์</p>
+        </div>
+        <div class="credit-badge">👨‍🏫 ผู้จัดทำ: ครูธนโชติ สุยะ</div>
+      </div>
+      <div class="howto" aria-label="คำแนะนำการใช้">
+        <div class="howto-item"><b>1</b><span><strong>ตั้งโจทย์</strong><br>กำหนดตัวเศษและตัวส่วน หรือกดสุ่มโจทย์</span></div>
+        <div class="howto-item"><b>2</b><span><strong>ทายคำตอบ</strong><br>ให้นักเรียนเลือกคำตอบก่อนทดลอง</span></div>
+        <div class="howto-item"><b>3</b><span><strong>เทน้ำ</strong><br>กด “เทน้ำเลย!” เพื่อดูการรวมทีละแก้ว</span></div>
+        <div class="howto-item"><b>4</b><span><strong>สังเกต</strong><br>เปรียบเทียบระดับน้ำและคำตอบที่ทายไว้</span></div>
+        <div class="howto-item"><b>5</b><span><strong>สรุป</strong><br>เปิดข้อสรุปหลังให้นักเรียนอธิบายเหตุผล</span></div>
+      </div>
+      <div class="publish-note">💡 แนะนำสำหรับครู: ควรให้นักเรียนคิดและอธิบายก่อนกดดูข้อสรุป เพื่อให้ผู้เรียนค้นพบหลักการ “บวกตัวเศษ ตัวส่วนคงเดิม” ด้วยตนเอง</div>
+    </section>
+
+    <div class="layout">
+      <aside class="panel" aria-label="แผงควบคุมครู">
+        <h2>🎛️ ตั้งโจทย์</h2>
+        <p>ครูกำหนดตัวเลขเอง หรือกดสุ่มโจทย์ได้</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="numA">ตัวเศษแก้ว A</label>
+            <input id="numA" type="number" min="1" max="11" value="3" />
+          </div>
+          <div class="field">
+            <label for="numB">ตัวเศษแก้ว B</label>
+            <input id="numB" type="number" min="1" max="11" value="2" />
+          </div>
+          <div class="field full">
+            <label for="den">ตัวส่วนร่วม</label>
+            <select id="den">
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="8" selected>8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+          <div class="field full">
+            <div class="switch-row">
+              <label for="limitOne">จำกัดผลบวกไม่เกิน 1</label>
+              <input id="limitOne" type="checkbox" checked />
+            </div>
+          </div>
+        </div>
+
+        <div class="control-actions">
+          <button class="btn btn-primary" id="setBtn" type="button">✓ ตั้งโจทย์</button>
+          <button class="btn btn-ghost" id="randomBtn" type="button">🎲 สุ่มโจทย์</button>
+        </div>
+
+        <div class="status" id="status" aria-live="polite">
+          พร้อมแล้ว — ให้นักเรียนทายคำตอบก่อนเทน้ำ
+        </div>
+
+        <div style="margin-top:16px">
+          <label for="difficulty">ระดับความยากของโจทย์สุ่ม</label>
+          <select id="difficulty" style="margin-top:6px">
+            <option value="easy">ง่าย — ตัวส่วน 4, 5, 6</option>
+            <option value="medium" selected>ปานกลาง — ตัวส่วน 6, 8, 9</option>
+            <option value="hard">ยาก — ตัวส่วน 8, 10, 12</option>
+          </select>
+        </div>
+
+        <div class="mini-note">
+          💡 แนะนำ: ในขั้น Engage ให้เด็ก “ทายก่อน” แล้วค่อยให้นักเรียน 1 คนออกมากดเทน้ำ
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="steps" aria-label="ขั้นตอนกิจกรรม">
+          <div class="step active" data-step="1"><span>1</span>ตั้งโจทย์</div>
+          <div class="step" data-step="2"><span>2</span>ทายคำตอบ</div>
+          <div class="step" data-step="3"><span>3</span>เทน้ำ</div>
+          <div class="step" data-step="4"><span>4</span>สังเกต</div>
+          <div class="step" data-step="5"><span>5</span>สรุป</div>
+        </section>
+
+        <section class="stage-card">
+          <div class="challenge-head">
+            <div class="challenge-title">
+              <h2>ถ้าเทน้ำสองแก้วนี้รวมกัน จะได้น้ำเท่าไร?</h2>
+              <p>ลองทายคำตอบก่อน แล้วพิสูจน์ด้วยการเทน้ำ</p>
+            </div>
+            <div class="problem-pill" id="problemText" aria-label="โจทย์ปัจจุบัน"></div>
+          </div>
+
+          <div class="lab" id="lab">
+            <div class="cup-wrap" id="wrapA">
+              <div class="cup-label a-label">แก้ว A</div>
+              <div class="cup-stage">
+                <div class="cup">
+                  <div class="water a" id="waterA"></div>
+                </div>
+                <div class="measure" id="measureA"></div>
+              </div>
+              <div class="fraction-tag" id="fracA"></div>
+            </div>
+
+            <div class="math-op">+</div>
+
+            <div class="cup-wrap" id="wrapB">
+              <div class="cup-label b-label">แก้ว B</div>
+              <div class="cup-stage">
+                <div class="cup">
+                  <div class="water b" id="waterB"></div>
+                </div>
+                <div class="measure" id="measureB"></div>
+              </div>
+              <div class="fraction-tag" id="fracB"></div>
+            </div>
+
+            <div class="math-op">→</div>
+
+            <div class="cup-wrap result-wrap">
+              <div class="cup-label r-label">แก้วรวม</div>
+              <div class="cup-stage">
+                <div class="cup">
+                  <div class="water result" id="waterR"></div>
+                </div>
+                <div class="measure" id="measureR"></div>
+              </div>
+              <div class="fraction-tag" id="fracR">?</div>
+            </div>
+          </div>
+
+          <div class="answer-zone" id="answerZone" aria-label="ตัวเลือกคำตอบ"></div>
+
+          <div class="action-row">
+            <button class="btn btn-green" id="pourBtn" type="button" disabled>🫗 เทน้ำเลย!</button>
+            <button class="btn btn-orange" id="observeBtn" type="button" disabled>👀 สังเกตผล</button>
+            <button class="btn btn-purple" id="summaryBtn" type="button" disabled>💡 ดูข้อสรุป</button>
+          </div>
+
+          <div class="observe" id="observeBox">
+            <h3>🔍 สังเกตอะไรได้บ้าง?</h3>
+            <ul>
+              <li id="obs1"></li>
+              <li id="obs2"></li>
+              <li>หนึ่งหน่วยยังแบ่งเป็นจำนวนส่วนเท่าเดิม ดังนั้น “ตัวส่วน” จึงไม่เปลี่ยน</li>
+            </ul>
+          </div>
+
+          <div class="summary-box" id="summaryBox">
+            <div id="equationSummary" style="font-size:clamp(26px,3vw,42px);font-weight:900"></div>
+            <div class="summary-rule">ตัวส่วนเท่ากัน → บวกตัวเศษ → ตัวส่วนคงเดิม</div>
+          </div>
+        </section>
+
+        <section class="below-grid">
+          <div class="question-card">
+            <h3>💬 คำถามชวนคิดสำหรับครู</h3>
+            <div class="q-list">
+              <div class="q"><div class="q-num">1</div><div>ก่อนเท แก้ว A และแก้ว B มีน้ำอย่างละกี่ส่วน?</div></div>
+              <div class="q"><div class="q-num">2</div><div>หลังเทรวมกัน มีน้ำทั้งหมดกี่ส่วน?</div></div>
+              <div class="q"><div class="q-num">3</div><div>แก้วยังคงแบ่งเป็นจำนวนส่วนเท่าเดิมหรือไม่?</div></div>
+              <div class="q"><div class="q-num">4</div><div>ทำไม “ตัวส่วน” จึงไม่เปลี่ยน?</div></div>
+            </div>
+          </div>
+
+          <div class="teacher-card">
+            <h3>📘 ใช้ในขั้น Engage (5E)</h3>
+            <ul>
+              <li>ให้นักเรียนทายคำตอบก่อนเสมอ</li>
+              <li>ยังไม่บอกกฎการบวกเศษส่วนในตอนเริ่ม</li>
+              <li>ให้นักเรียนออกมากด “เทน้ำเลย!” หน้าชั้น</li>
+              <li>หลังเห็นผล ให้เด็กอธิบายสิ่งที่สังเกตด้วยภาษาของตนเอง</li>
+              <li>ค่อยเปิด “ดูข้อสรุป” เป็นขั้นสุดท้าย</li>
+            </ul>
+            <div class="mini-note">เป้าหมาย: เด็กค้นพบว่า <b>บวกตัวเศษ และตัวส่วนคงเดิม</b> จากหลักฐานที่เห็น</div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="publish-footer">
+      <div><strong>ภารกิจแก้ววิเศษ</strong> · สื่อการเรียนรู้เรื่องการบวกเศษส่วนที่มีตัวส่วนเท่ากัน</div>
+      <div>ผู้จัดทำ: <strong>ครูธนโชติ สุยะ</strong> · เพื่อการจัดการเรียนรู้</div>
+    </footer>
+  </div>
+
+  <div class="sr-only" id="live" aria-live="assertive"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
